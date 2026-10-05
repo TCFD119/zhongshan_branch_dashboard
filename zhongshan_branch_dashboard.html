@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏬 中山分隊 勤務相關連結首頁</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 80%);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent-red: #ef4444;
+            --accent-red-glow: rgba(239, 68, 68, 0.4);
+            --accent-gold: #f59e0b;
+            --accent-gold-bg: rgba(245, 158, 11, 0.1);
+        }
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body { 
+            font-family: '微軟正黑體', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            background: var(--bg-gradient); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+            padding: 3rem 2rem; 
+            overflow-x: hidden;
+        }
+        
+        /* 標題區塊設計 */
+        header { 
+            text-align: center; 
+            margin-bottom: 4rem; 
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        h1 { 
+            font-size: 2.8rem; 
+            color: #ffffff; 
+            margin-bottom: 0.5rem; 
+            letter-spacing: 2px; 
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        h1 i { 
+            color: var(--accent-gold); 
+            filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4));
+        }
+        
+        .subtitle { 
+            color: var(--accent-red); 
+            font-size: 1.2rem; 
+            letter-spacing: 3px;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 時鐘設計 */
+        .clock-container {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        #date-display {
+            font-size: 1rem;
+            color: var(--text-sub);
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        #time-display {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+        
+        /* 網格響應式排版 */
+        .dashboard-container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
+            gap: 2rem; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        
+        /* 卡片設計 - 毛玻璃與微交互 */
+        .card { 
+            background: var(--card-bg); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px; 
+            padding: 2.5rem 2rem; 
+            text-decoration: none; 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-gold);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover { 
+            transform: translateY(-8px); 
+            border-color: rgba(239, 68, 68, 0.5); 
+            box-shadow: 0 15px 30px -5px var(--accent-red-glow); 
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .card:hover::before {
+            background: var(--accent-red);
+        }
+        
+        .icon-wrapper { 
+            font-size: 2.5rem; 
+            margin-bottom: 1.5rem; 
+            color: var(--accent-gold); 
+            background: var(--accent-gold-bg);
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.4s ease; 
+        }
+        
+        .card:hover .icon-wrapper { 
+            color: #ffffff; 
+            background: var(--accent-red);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--accent-red-glow);
+        }
+        
+        .card-title { 
+            font-size: 1.5rem; 
+            margin-bottom: 1rem; 
+            font-weight: 700; 
+            letter-spacing: 1px;
+        }
+        
+        .card-desc { 
+            font-size: 1.05rem; 
+            color: var(--text-sub); 
+            line-height: 1.6; 
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-desc {
+            color: #e2e8f0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .dashboard-container { gap: 1.5rem; grid-template-columns: 1fr; }
+            .card { padding: 2rem 1.5rem; }
+            .clock-container { padding: 0.6rem 1.2rem; }
+            #date-display { display: block; border-right: none; margin: 0 0 5px 0; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><i class="fa-solid fa-fire-shield"></i>中山分隊</h1>
+        <p class="subtitle">值班台勤務資訊戰情面板</p>
+        
+        <!-- 即時時鐘 -->
+        <div class="clock-container">
+            <span id="date-display">載入中...</span>
+            <span id="time-display">00:00:00</span>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <a href="https://tcfd119.github.io/code_artifact/" target="_blank" class="card">
+            <div class="icon-wrapper"><i class="fa-solid fa-clipboard-check"></i></div>
+            <h2 class="card-title">值班注意事項</h2>
+            <p class="card-desc">值班台重要交接事項與勤務規範提醒</p>
+        </a>
+
+        <a href="https://tcfd.myds.me:52119/Ambulance Video ID.php" target="_blank" class="card">
+            <div class="icon-wrapper"><i class="fa-solid fa-video"></i></div>
+            <h2 class="card-title">救護影像建置</h2>
+            <p class="card-desc">救護車行車紀錄器影像檔案與 ID 對照管理</p>
+        </a>
+
+        <a href="https://tcfd119.github.io/Water/" target="_blank" class="card">
+            <div class="icon-wrapper"><i class="fa-solid fa-droplet"></i></div>
+            <h2 class="card-title">水源資訊系統</h2>
+            <p class="card-desc">轄區可用水源、天然水源與蓄水池查詢</p>
+        </a>
+
+        <a href="https://tcfd.myds.me:52119/TCFD.php" target="_blank" class="card">
+            <div class="icon-wrapper"><i class="fa-solid fa-truck-medical"></i></div>
+            <h2 class="card-title">119 即時案件</h2>
+            <p class="card-desc">掌握最新派遣動態與案件進度追蹤</p>
+        </a>
+
+        <a href="https://tcfd119.github.io/fire-hydrant-location/" target="_blank" class="card">
+            <div class="icon-wrapper"><i class="fa-solid fa-map-location-dot"></i></div>
+            <h2 class="card-title">消防栓位置圖</h2>
+            <p class="card-desc">視覺化消防栓分布與圖層定位導覽</p>
+        </a>
+
+        <a href="https://tcfd119.github.io/Disaster-Registration-Ledger/" target="_blank" class="card">
+            <div class="icon-wrapper"><i class="fa-solid fa-book-open"></i></div>
+            <h2 class="card-title">受理災害登記簿</h2>
+            <p class="card-desc">各項火警與重大災害案件電子登錄系統</p>
+        </a>
+    </div>
+
+    <!-- 強化版時鐘運作腳本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateClock() {
+                const now = new Date();
+                
+                // 1. 處理日期與星期 (手動組合，避免瀏覽器語系支援問題)
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+                const weekday = weekdays[now.getDay()];
+                
+                document.getElementById('date-display').innerText = `${year}/${month}/${day} (${weekday})`;
+                
+                // 2. 處理時間 (補零)
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                
+                document.getElementById('time-display').innerText = `${hours}:${minutes}:${seconds}`;
+            }
+            
+            // 先執行一次避免一開始顯示「載入中...」
+            updateClock();
+            
+            // 設定每秒更新一次
+            setInterval(updateClock, 1000);
+        });
+    </script>
+</body>
+</html>
